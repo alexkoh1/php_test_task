@@ -1,0 +1,15 @@
+list_goods_route:
+  path:     /
+  defaults: { controller: 'controller.goods::listAll' }
+
+create_many_goods_route:
+  path:     /good/create
+  defaults: { controller: 'controller.goods::createManyGoods' }
+
+create_order_route:
+  path:     /order/create
+  defaults: { controller: 'controller.order::create' }
+
+pay_order_route:
+  path:     /order/pay
+  defaults: { controller: 'controller.order::pay' }

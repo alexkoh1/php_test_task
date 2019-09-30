@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  web:
+    image: webdevops/php-nginx-dev:7.1
+    restart: always
+    ports:
+      - "127.0.0.1:9080:80"
+    environment:
+      WEB_DOCUMENT_ROOT: /src/public
+      XDEBUG_REMOTE_HOST: 172.21.0.1
+    volumes:
+      - ".:/src"
+    links:
+      - db
+
+  db:
+    image: postgres:11.4
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+#networks:
+#  test_net:
+#    driver: bridge
+#    ipam:
+#      config:
+#        - subnet: 192.168.123.0/24
+#          gateway: 192.168.123.1
+

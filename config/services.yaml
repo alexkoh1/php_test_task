@@ -1,0 +1,54 @@
+parameters:
+  url: 'ya.ru'
+
+services:
+  controller.goods:
+    class:      App\Controller\GoodsController
+    arguments:
+      - "@service.goods"
+      - "@view.json_goods"
+
+  controller.order:
+    class: App\Controller\OrderController
+    arguments:
+      - "@service.order"
+      - "@view.json_order"
+
+  service.goods:
+    class: App\Service\GoodService
+    arguments:
+      - "@repository.goods"
+
+  service.send_request:
+    class: App\Service\SendRequestService
+    arguments:
+      - '%url%'
+
+  service.order:
+    class: App\Service\OrderService
+    arguments:
+      - "@repository.order"
+      - "@service.send_request"
+
+  repository.goods:
+    class: App\Repository\GoodRepository
+    arguments:
+      - "@pdo"
+
+  repository.order:
+    class: App\Repository\OrderRepository
+    arguments:
+      - "@pdo"
+
+  view.json_goods:
+    class: App\View\JsonGoodView
+
+  view.json_order:
+    class: App\View\JsonOrderView
+
+  pdo:
+    class: PDO
+    arguments:
+      - "pgsql:host=db;dbname=php-test-task"
+      - "postgres"
+      - "mysecretpassword"
